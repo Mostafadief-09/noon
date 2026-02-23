@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noon Discount Code</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- #pixels -->
+    <style>
+        :root {
+            --primary: #facc15;
+            --primary-light: #fef9c3;
+            --primary-dark: #eab308;
+            --text-primary: #1f2937;
+            --success: #22c55e;
+        }
+
+        .coupon-container {
+            position: relative;
+            background: white;
+            border-radius: 8px; /* Increased from 6px */
+            height: 70px; /* Increased from 36px */
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 280px; /* Increased from 160px */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: dashed #e5e7eb 2px;
+
+        }
+        .coupon-container:hover {
+            .copy-button {
+                width: 75%;
+            }
+        }
+
+        .coupon-text {
+            position: absolute;
+            right: 40px; /* Adjusted for larger container */
+            font-size: 32px; /* Increased from 18px */
+            font-weight: 600;
+            color: #374151;
+            z-index: 2;
+        }
+
+        .copy-button {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 80%;
+            background: var(--primary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 0% 100%);
+            z-index: 3;
+        }
+
+        .striped-section {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 60%;
+            background: repeating-linear-gradient(
+                -45deg,
+                #f0f0f0,
+                #f0f0f0 2px,
+                #ffffff 2px,
+                #ffffff 4px
+            );
+            z-index: 1;
+        }
+
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .copy-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            100% { left: 100%; }
+        }
+
+        .success-message {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .success-message.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-custom flex items-center justify-center p-6">
+    <div class="bg-white rounded-2xl p-8 w-full max-w-xl opacity-0 relative overflow-hidden shadow-2xl" id="card">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-5 left-5 w-24 h-24 bg-primary-light rounded-full opacity-30 floating"></div>
+            <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-primary-light rounded-full opacity-30"></div>
+        </div>
+
+        <div class="w-32 h-32 mx-auto mb-8 floating" id="logo">
+            <img src="image.png" alt="Noon Logo" class="w-full h-full object-contain">
+        </div>
+
+        <h1 class="text-3xl font-bold text-center mb-4 text-text-primary">
+            كود خصم نون
+        </h1>
+
+        <p class="text-center text-lg text-gray-600 mb-8">
+            خصم حتى 80% على جميع المنتجات وكود خصم إضافي من نون
+        </p>
+
+        <div class="relative mb-6 pulse" id="codeBox">
+            <!-- Replaced the dashed border design with the original coupon container -->
+            <div class="coupon-container">
+                <div class="striped-section"></div>
+                <span class="coupon-text" id="code">U86</span>
+                <button class="copy-button" id="copyBtn"></button>
+            </div>
+        </div>
+
+        <div class="success-message text-center text-success font-bold mb-4" id="copyMessage">
+            ✓ تم النسخ بنجاح!
+        </div>
+
+        <button class="copy-btn w-full bg-yellow-400 text-text-primary text-lg font-bold py-4 px-6 rounded-xl hover:bg-yellow-500 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-2 group relative" id="copyBtnBottom">
+            <span class="group-hover:scale-105 transition-transform">انسخ كود الخصم</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:rotate-12 transition-transform">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.to("#card", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+
+            const copyBtn = document.getElementById('copyBtn');
+            const copyBtnBottom = document.getElementById('copyBtnBottom');
+            const code = document.getElementById('code');
+            const copyMessage = document.getElementById('copyMessage');
+
+            const handleCopy = async () => {
+                await navigator.clipboard.writeText(code.textContent);
+                copyMessage.classList.add('show');
+                
+                gsap.to("#codeBox", {
+                    scale: 1.05,
+                    duration: 0.3,
+                    yoyo: true,
+                    repeat: 1
+                });
+
+                setTimeout(() => {
+                    copyMessage.classList.remove('show');
+                    window.location.href = 'https://www.noon.com';
+                }, 1000);
+            };
+
+            copyBtn.addEventListener('click', handleCopy);
+            copyBtnBottom.addEventListener('click', handleCopy);
+        });
+    </script>
+</body>
+</html>
